@@ -70,7 +70,6 @@ public class AlertRabbit {
     }
 
     public static class Rabbit implements Job {
-
         public Rabbit() {
             System.out.println(hashCode());
         }
