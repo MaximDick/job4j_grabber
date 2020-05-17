@@ -23,10 +23,12 @@ public class SqlRuParse {
         for (int i = 1; i < rows.size(); i++) {
             Element row = rows.get(i);
             Elements cols = row.select("td");
+            Element href = cols.get(1).child(0);
+            Element vacancy = cols.get(5);
 
-            System.out.println(cols.get(1).child(0).attr("href"));
-            System.out.println(cols.get(1).child(0).text());
-            System.out.println(cols.get(5).text());
+            System.out.println(href.attr("href"));
+            System.out.println(href.text());
+            System.out.println(vacancy.text());
         }
     }
 }
