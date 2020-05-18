@@ -19,15 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 public class SqlRuParse {
-//    public static String main(String[] args) throws Exception {
-//
-//        Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
-//        Elements row = doc.select(".postslisttopic");
-//        for (Element td : row) {
-//            Element href = td.child(0);
-//            System.out.println(href.attr("href"));
-//            System.out.println(href.text());
-//        }
+//    public static void main(String[] args) throws Exception {
+
 
 //        Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
 //        Element table = doc.select("table").get(2);
@@ -52,32 +45,35 @@ public class SqlRuParse {
      * Добавляет в список и возвращает его.
      * @param url - ссылка ссайта в строковом представлении.
      * @return listVacancies*/
-    public List<Vacancy> parseVacancy(String url) {
+    public List<Vacancy> parseVacancy(String url, int pages) {
         List<Vacancy> listVacancies = new ArrayList<>();
         Document doc = null;
         Date date;
-        try {
-            doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Element table = doc.select("table").get(2);
-        Elements rows = table.select("tr");
-        for (int i = 1; i < rows.size(); i++) {
-            Element row = rows.get(i);
-            Elements cols = row.select("td");
-            String name = cols.get(1).child(0).text();
-            String link = cols.get(1).child(0).attr("href");
-            String create = cols.get(5).text();
-            if (create.contains("сегодня")) {
-                create = create.replace("сегодня", setToday());
-            }
-            if (create.contains("вчера")) {
-                create = create.replace("вчера", setYesterday());
-            }
+        System.out.println("прочитать страниц " + pages);
+        for (int p = 1; p <= pages; p++) {
+            try {
+                doc = Jsoup.connect(url + 1).get();
+                Elements forumTable = doc.getElementsByClass("forumTable");
+                Elements rows = forumTable.first().getElementsByTag("tbody").first().getElementsByTag("tr");
 
-            date = convertDate(create);
-            listVacancies.add(new Vacancy(name, link, date));
+                for (int i = 1; i < rows.size(); i++) {
+                    Element row = rows.get(i);
+                    String name = row.child(1).getElementsByTag("a").first().text();
+                    String link = row.getElementsByTag("a").attr("href");
+                    String create = row.child(5).text();
+                    if (create.contains("сегодня")) {
+                        create = create.replace("сегодня", setToday());
+                    }
+                    if (create.contains("вчера")) {
+                        create = create.replace("вчера", setYesterday());
+                    }
+
+                    date = convertDate(create);
+                    listVacancies.add(new Vacancy(name, link, date));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return listVacancies;
     }
@@ -122,11 +118,8 @@ public class SqlRuParse {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             return date;
-
         }
 
-
-    }
+}
 
