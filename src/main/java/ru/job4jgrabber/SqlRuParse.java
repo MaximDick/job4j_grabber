@@ -121,5 +121,25 @@ public class SqlRuParse {
             return date;
         }
 
-}
+        /**
+         * метод Возвращает список заполненных постов.
+         * @param urlPost ссылка на форум.
+         * @return listPost - возвращает список постов (автор, описание, дата создания).
+         * */
+        public List<Post> gettingPostDetails(String urlPost) throws IOException {
+            List<Post> listPost = new ArrayList<>();
+            Document doc = Jsoup.connect(urlPost).get();
+            Elements row = doc.select("table.msgTable");
+            for (int i = 0; i < row.size(); i++) {
+                Element elem = row.get(i);
+                String strDesc = elem.child(0).child(1).child(1).text();
+                String author = elem.child(0).child(1).child(0).child(0).text();
+                String dataStr = elem.child(0).child(2).child(0).text();
+                String stDate = dataStr.substring(0, dataStr.indexOf('['));
+                Date date = convertDate(stDate);
 
+                listPost.add(new Post(author, strDesc, date));
+            }
+            return listPost;
+        }
+    }

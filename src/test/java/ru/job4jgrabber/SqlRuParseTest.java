@@ -3,7 +3,6 @@ package ru.job4jgrabber;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class SqlRuParseTest {
     }
 
     @Test
-    public void whenReplaceYesterdayfromStringThenGetDate() {
+    public void whenReplaceYesterdayFromStringThenGetDate() {
         SqlRuParse parser = new SqlRuParse();
         Date time = java.sql.Timestamp.valueOf(LocalDateTime.now().minusDays(1));
         String expected = new SimpleDateFormat("d MM yy").format(time);
