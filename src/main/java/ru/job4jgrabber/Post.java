@@ -7,25 +7,19 @@ import java.util.Objects;
  * Класс описывающий модель поста.*/
 public class Post {
 
-    String topicPost; //тема поста
+
     String desc; //описание
     String nameAuthor; //автор
     Date dateCreated; //дата создания
 
-    public Post(String topicPost, String desc, String nameAutor, Date dateCreated) {
-        this.topicPost = topicPost;
+    public Post(String nameAuthor, String desc, Date dateCreated) {
+        this.nameAuthor = nameAuthor;
         this.desc = desc;
-        this.nameAuthor = nameAutor;
         this.dateCreated = dateCreated;
+
+
     }
 
-    public String getTopicPost() {
-        return topicPost;
-    }
-
-    public void setTopicPost(String topicPost) {
-        this.topicPost = topicPost;
-    }
 
     public String getDesc() {
         return desc;
@@ -53,31 +47,19 @@ public class Post {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Post post = (Post) o;
 
-        if (!Objects.equals(topicPost, post.topicPost)) {
-            return false;
-        }
-        if (!Objects.equals(desc, post.desc)) {
-            return false;
-        }
-        if (!Objects.equals(nameAuthor, post.nameAuthor)) {
-            return false;
-        }
+        if (!Objects.equals(desc, post.desc)) return false;
+        if (!Objects.equals(nameAuthor, post.nameAuthor)) return false;
         return Objects.equals(dateCreated, post.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        int result = topicPost != null ? topicPost.hashCode() : 0;
-        result = 31 * result + (desc != null ? desc.hashCode() : 0);
+        int result = desc != null ? desc.hashCode() : 0;
         result = 31 * result + (nameAuthor != null ? nameAuthor.hashCode() : 0);
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         return result;
@@ -86,7 +68,6 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" + "topicPost='"
-                + topicPost + '\''
                 + ", desc='" + desc + '\''
                 + ", nameAuthor='" + nameAuthor + '\''
                 + ", dateCreated=" + dateCreated + '}';
