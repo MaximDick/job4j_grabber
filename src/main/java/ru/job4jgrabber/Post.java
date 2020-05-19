@@ -47,13 +47,21 @@ public class Post {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Post post = (Post) o;
 
-        if (!Objects.equals(desc, post.desc)) return false;
-        if (!Objects.equals(nameAuthor, post.nameAuthor)) return false;
+        if (!Objects.equals(desc, post.desc)) {
+            return false;
+        }
+        if (!Objects.equals(nameAuthor, post.nameAuthor)) {
+            return false;
+        }
         return Objects.equals(dateCreated, post.dateCreated);
     }
 
