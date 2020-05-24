@@ -6,12 +6,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,23 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SqlRuParse {
-//    public static void main(String[] args) throws Exception {
 
-
-//        Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
-//        Element table = doc.select("table").get(2);
-//        Elements rows = table.select("tr");
-//        for (int i = 1; i < rows.size(); i++) {
-//            Element row = rows.get(i);
-//            Elements cols = row.select("td");
-//            Element href = cols.get(1).child(0);
-//            Element data = cols.get(5);
-//
-//            System.out.println(href.attr("href"));
-//            System.out.println(href.text());
-//            System.out.println(data.text());
-//        }
-//    }
 
     /**
      * Парсит сайт.
@@ -126,7 +108,8 @@ public class SqlRuParse {
          * @param urlPost ссылка на форум.
          * @return listPost - возвращает список постов (автор, описание, дата создания).
          * */
-        public List<Post> gettingPostDetails(String urlPost) throws IOException {
+
+        public  List<Post>  gettingPostDetails(String urlPost) throws IOException {
             List<Post> listPost = new ArrayList<>();
             Document doc = Jsoup.connect(urlPost).get();
             Elements row = doc.select("table.msgTable");
@@ -142,4 +125,14 @@ public class SqlRuParse {
             }
             return listPost;
         }
+
+
+
+    public static void main(String[] args) throws IOException {
+            String url = "https://www.sql.ru/forum/1322588/alfa-bank-vakansiya-t-sql-razrabotchika";
+        SqlRuParse sq = new SqlRuParse();
+
+        System.out.println(sq.gettingPostDetails(url));
+
+    }
     }

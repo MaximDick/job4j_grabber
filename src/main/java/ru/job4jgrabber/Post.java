@@ -76,8 +76,8 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" + "topicPost='"
-                + ", desc='" + desc + '\''
-                + ", nameAuthor='" + nameAuthor + '\''
+                + ", desc='" + desc + '\n'
+                + ", nameAuthor=" + nameAuthor + '\n'
                 + ", dateCreated=" + dateCreated + '}';
     }
 }
