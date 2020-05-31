@@ -34,7 +34,7 @@ public class SqlRuParseTest {
 
     @Test
     public void whenConvertTimeFromStringTenGetDate() {
-        SqlRuParse parser = new SqlRuParse();
+        SqlRuDate parser = new SqlRuDate();
         Date date = java.sql.Timestamp.valueOf(LocalDateTime.of(2020, 05, 18, 21, 19));
 
         Date result = parser.convertDate("18 май 20, 21:19");

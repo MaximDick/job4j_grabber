@@ -7,8 +7,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class SqlRuParse {
                         create = create.replace("вчера", setYesterday());
                     }
 
-                    date = convertDate(create);
+                    date = SqlRuDate.convertDate(create);
                     listVacancies.add(new Vacancy(name, link, date));
                 }
             } catch (Exception e) {
@@ -80,28 +78,7 @@ public class SqlRuParse {
             return timeStamp;
         }
 
-        /**
-         * Конвертирует дату из строки в Date.
-         * */
-        public Date convertDate(String stringDate) {
-            Date date = null;
-            String[] givenMonths = {"янв", "фев", "мар", "апр", "май", "июн",
-                    "июл", "авг", "сен", "окт", "ноя", "дек"};
-            String[] realMonths = {"01", "02", "03", "04", "05", "06",
-                    "07", "08", "09", "10", "11", "12"};
 
-            for (int i = 0; i < givenMonths.length; i++) {
-                stringDate = stringDate.replace(givenMonths[i], realMonths[i]);
-            }
-
-            try {
-                DateFormat format = new SimpleDateFormat("dd MM yy, HH:mm");
-                date = format.parse(stringDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return date;
-        }
 
         /**
          * метод Возвращает список заполненных постов.
@@ -119,7 +96,7 @@ public class SqlRuParse {
                 String author = elem.child(0).child(1).child(0).child(0).text();
                 String dataStr = elem.child(0).child(2).child(0).text();
                 String stDate = dataStr.substring(0, dataStr.indexOf('['));
-                Date date = convertDate(stDate);
+                Date date = SqlRuDate.convertDate(stDate);
 
                 listPost.add(new Post(author, strDesc, date));
             }
@@ -130,9 +107,8 @@ public class SqlRuParse {
 
     public static void main(String[] args) throws IOException {
             String url = "https://www.sql.ru/forum/1322588/alfa-bank-vakansiya-t-sql-razrabotchika";
-        SqlRuParse sq = new SqlRuParse();
-
-        System.out.println(sq.gettingPostDetails(url));
+            SqlRuParse sq = new SqlRuParse();
 
     }
+
     }

@@ -41,4 +41,12 @@ public class Vacancy {
     public void setData(Date data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Vacancy{"
+                + "nameVacancy='" + name + '\''
+                + ", link='" + link + '\''
+                + ", data=" + data + '}';
+    }
 }
