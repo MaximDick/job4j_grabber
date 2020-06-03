@@ -16,4 +16,6 @@ public interface Store {
      * @return - list of posts
      */
     List<Post> getAll();
+
+    Post findById(String id);
     }

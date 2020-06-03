@@ -1,5 +1,6 @@
 package ru.job4jgrabber;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,9 +11,9 @@ public class Post {
 
     String desc; //описание
     String nameAuthor; //автор
-    Date dateCreated; //дата создания
+    LocalDateTime dateCreated; //дата создания
 
-    public Post(String nameAuthor, String desc, Date dateCreated) {
+    public Post(String nameAuthor, String desc, LocalDateTime dateCreated) {
         this.nameAuthor = nameAuthor;
         this.desc = desc;
         this.dateCreated = dateCreated;
@@ -37,11 +38,11 @@ public class Post {
         this.nameAuthor = nameAuthor;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
