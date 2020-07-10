@@ -25,7 +25,7 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public void save(Post post) {
         boolean result = false;
-        try (PreparedStatement statement = cnn.prepareStatement("insert into post(name, text,created) values(?,?,?,?)")) {
+        try (PreparedStatement statement = cnn.prepareStatement("insert into post(name, text,created) values(?,?,?)")) {
             statement.setString(1, post.getNameAuthor());
             statement.setString(2, post.getDesc());
             statement.setTimestamp(3, Timestamp.valueOf(String.valueOf(post.getDateCreated())));
@@ -39,8 +39,8 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public List<Post> getAll() {
         List<Post> result = new ArrayList<>();
-        try (Statement statement = cnn.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("select * from post");
+        try (Statement statement = cnn.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from post")) {
             while (resultSet.next()) {
                 result.add(new Post(resultSet.getString("name"),
                         resultSet.getString("desc"),
@@ -73,7 +73,9 @@ public class PsqlStore implements Store, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-
+        if (cnn != null) {
+            cnn.close();
+        }
     }
 
 }
