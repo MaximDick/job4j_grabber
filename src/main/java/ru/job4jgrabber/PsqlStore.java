@@ -55,9 +55,10 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public Post findById(String id) {
         Post result = null;
-        try (PreparedStatement statement = cnn.prepareStatement("selet * from where id = ?")) {
+        try (PreparedStatement statement = cnn.prepareStatement("selet * from where id = ?");
+            ResultSet resultSet = statement.executeQuery()) {
             statement.setInt(1, Integer.valueOf(id));
-            ResultSet resultSet = statement.executeQuery();
+            statement.setInt(1, Integer.valueOf(id));
             while (resultSet.next()) {
                 result = new Post(resultSet.getString("name"),
                             resultSet.getString("text"),
